@@ -2,7 +2,7 @@ class Kakisute < Formula
   desc "Kakisute(scribbled snippets) management tool written in Rust"
   homepage "https://github.com/kazu914/kakisute"
   url "https://github.com/kazu914/kakisute/releases/download/v0.1.4/kakisute-x86_64-apple-darwin.tar.gz"
-  sha256 "4a6227d31012d93f62b2fd9c12c86f1b234ea8fabe90dba3d734048882488bd1"
+  sha256 "742d8d4f22157809d2cf16dc94ff9c03dd4d87981ac0c42fda0da1258828ed22"
   version "0.1.4"
 
   def install
