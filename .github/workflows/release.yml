@@ -1,0 +1,49 @@
+name: Update brew
+on:
+  repository_dispatch:
+    types: [update-brew]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'version'
+        required: true
+        default: ''
+      sha256_arm:
+        description: 'checksum for arm'
+        required: true
+        default: ''
+      sha256_x86:
+        description: 'checksum for x86'
+        required: true
+        default: ''
+jobs:
+  update-brew:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v3
+      - name: Update formula
+        run: |
+          sed "s/__VERSION__/${{ github.event.client_payload.version }}/;s/__SHA256_ARM__/${{ github.event.client_payload.sha256_arm }}/;s/__SHA256_X86__/${{ github.event.client_payload.sha256_x86 }}/" ./template/kakisute.rb.tmp > ./Formula/kakisute.rb
+      - name: set version
+        id: set_version
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git switch update_version
+          git add .
+          git commit -m 'new release for ${{ github.event.client_payload.version }}'
+          git push
+      - name: Create Pull Request
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const response = await github.rest.pulls.create({
+              title: 'new release for ${{ github.event.client_payload.version }}',
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              head: 'update_version',
+              base: 'master',
+              body: 'Automatically prepared new release for ${{ github.event.client_payload.version }}'
+            });
+            return response.data.number;
