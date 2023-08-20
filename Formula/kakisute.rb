@@ -1,16 +1,16 @@
 class Kakisute < Formula
   desc "Kakisute(scribbled snippets) management tool written in Rust"
   homepage "https://github.com/kazu914/kakisute"
-  version "v0.3.0-feature-refine-actions.7"
+  version "v0.2.0"
 
   on_macos do
     # if arm or else
     if Hardware::CPU.arm?
       url "https://github.com/kazu914/kakisute/releases/download/#{version}/kakisute-aarch64-apple-darwin.tar.gz"
-      sha256 "afda4fae8bea608f08509443b7e85b6c512b57a6b6e8eb8efa7c38dcae6ceaca"
+      sha256 "69d51e54b0f199b00938361309e0bdc17477bcbde75ff2c251baf3b359b57822"
     else
       url "https://github.com/kazu914/kakisute/releases/download/#{version}/kakisute-x86_64-apple-darwin.tar.gz"
-      sha256 "9802f34d00000c4dbcbe945de00ade352e8cbfdf4b723fd959301719d68f5803"
+      sha256 "e2f2bd77839f8f6da9b38d3ce326981ed4d65264057b0256f464edcc232e31c8"
     end
   end
 
